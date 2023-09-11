@@ -26,5 +26,4 @@ int main()
     cout << "end = "<< end.tv_sec << endl;
     cout << "pi = " << pi << endl;
     return 0;
-
 }

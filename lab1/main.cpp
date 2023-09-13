@@ -1,30 +1,32 @@
 #include <iostream>
 #include <cmath>
 #include <ctime>
+#include <sys/times.h>
+#include <unistd.h>
 
 using namespace std;
 
 int main()
 {
     long long n = 340000062;
+    // clock_gettime ~ 13.9021
+    // times ~ 14.19
+
+
+    // long long n = 1000000000;
+    // clock_gettime ~ 49.1615
+    // times ~ 68.99
+
     double pi = 0;
     double temp;
 
-    // union ticks
-    // {
-    //     unsigned long long t64;
-    //     struct s32
-    //     {
-    //         long th, tl;
-    //     }t32;
+    struct tms start, end;
+    long long clocks_per_sec = sysconf(_SC_CLK_TCK);
+    long long clocks;
+    times(&start);
 
-    // }start, end;
-    // double cpu_Hz = 2100000000ULL; // 2.1 GHz CPU
-
-    // asm("rdtsc\n":"=a"(start.t32.th),"=d"(start.t32.tl));
-
-    timespec start_gettime, end_gettime;
-    clock_gettime(CLOCK_MONOTONIC_RAW, &start_gettime);
+    // timespec start_gettime, end_gettime;
+    // clock_gettime(CLOCK_MONOTONIC_RAW, &start_gettime);
 
 
     for (int i = 0; i < n; i++)
@@ -34,11 +36,13 @@ int main()
     }
     pi = 4 * pi;
 
-    // asm("rdtsc\n":"=a"(end.t32.th),"=d"(end.t32.tl));
-    // cout << "Time taken: " << (end.t64 - start.t64) / cpu_Hz << endl;
-    
-    clock_gettime(CLOCK_MONOTONIC_RAW, &end_gettime);
-    cout << "clock_gettime: time = " << end_gettime.tv_sec - start_gettime.tv_sec + 0.000000001*(end_gettime.tv_nsec - start_gettime.tv_nsec) << endl;
+    times(&end);
+    clocks = end.tms_utime - start.tms_utime;
+    cout << "Time taken: " << (double)clocks / clocks_per_sec << endl;
+
+    // clock_gettime(CLOCK_MONOTONIC_RAW, &end_gettime);
+    // cout << "clock_gettime: time = " << end_gettime.tv_sec - start_gettime.tv_sec + 0.000000001*(end_gettime.tv_nsec - start_gettime.tv_nsec) << endl;
+
     cout << "pi = " << pi << endl;
     return 0;
 }

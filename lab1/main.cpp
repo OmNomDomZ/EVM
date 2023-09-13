@@ -4,16 +4,17 @@
 #include <sys/times.h>
 #include <unistd.h>
 
-using namespace std;
+using std::cout;
+using std::endl;
 
 int main()
 {
-    long long n = 340000062;
+    // long long n = 340001062;
     // clock_gettime ~ 13.9021
     // times ~ 14.19
 
 
-    // long long n = 1000000000;
+    long long n = 1000010000;
     // clock_gettime ~ 49.1615
     // times ~ 68.99
 
@@ -22,6 +23,7 @@ int main()
 
     struct tms start, end;
     long long clocks_per_sec = sysconf(_SC_CLK_TCK);
+    // cout << "Частота тактов ядра в сек = " <<  clocks_per_sec << endl;
     long long clocks;
     times(&start);
 
@@ -40,8 +42,8 @@ int main()
     clocks = end.tms_utime - start.tms_utime;
     cout << "Time taken: " << (double)clocks / clocks_per_sec << endl;
 
-    // clock_gettime(CLOCK_MONOTONIC_RAW, &end_gettime);
-    // cout << "clock_gettime: time = " << end_gettime.tv_sec - start_gettime.tv_sec + 0.000000001*(end_gettime.tv_nsec - start_gettime.tv_nsec) << endl;
+    // // clock_gettime(CLOCK_MONOTONIC_RAW, &end_gettime);
+    // // cout << "clock_gettime: time = " << end_gettime.tv_sec - start_gettime.tv_sec + 0.000000001*(end_gettime.tv_nsec - start_gettime.tv_nsec) << endl;
 
     cout << "pi = " << pi << endl;
     return 0;

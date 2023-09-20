@@ -10,16 +10,16 @@ using std::endl;
 int main()
 {
     double averageTime = 0;
+    double pi;
+    long long n = 900000000;
+
+    cout << "n = " << n << endl;
     for (int j = 0; j < 5; ++j)
     {
 
-        double pi = 0;
-        // long long n = 340001062;
-        // clock_gettime ~ 13.9021
-        // times ~ 14.19
+        pi = 0;
 
 
-        long long n = 600000000;
         double temp;
 
         // struct tms start, end;
@@ -52,8 +52,8 @@ int main()
 
 
 
-        cout << "pi = " << pi << endl;
     }
+    cout << "pi = " << pi << endl;
     cout << "Average time: " << averageTime / 5 << endl;
     return 0;
 }
